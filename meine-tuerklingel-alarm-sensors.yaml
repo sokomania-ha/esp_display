@@ -1,0 +1,83 @@
+# meine-tuerklingel-alarm-sensors.yaml
+# Sensoren fuer Tuerklingel & Alarm
+
+sensor:
+  # ── KLINGEL BATTERIE ──────────────────────────────────────────────────────
+  - id: klingel_batt_sensor
+    platform: homeassistant
+    entity_id: sensor.hauseingang_batterie
+    on_value:
+      - then:
+          - lvgl.label.update:
+              id: klingel_batt_label
+              text:
+                format: "%.0f%%"
+                args: [ 'x' ]
+          # Farbe je nach Ladestand
+          - if:
+              condition:
+                lambda: return x < 20.0;
+              then:
+                - lvgl.label.update:
+                    id: klingel_batt_label
+                    text_color: 0xFF4444
+              else:
+                - if:
+                    condition:
+                      lambda: return x < 50.0;
+                    then:
+                      - lvgl.label.update:
+                          id: klingel_batt_label
+                          text_color: 0xFFAA00
+                    else:
+                      - lvgl.label.update:
+                          id: klingel_batt_label
+                          text_color: 0x44FF44
+
+  # ── SIGNAL KLINGEL ────────────────────────────────────────────────────────
+  - id: klingel_signal_sensor
+    platform: homeassistant
+    entity_id: sensor.hauseingang_signalstarke
+    on_value:
+      - lvgl.label.update:
+          id: klingel_signal_label
+          text:
+            format: "%.0f dBm"
+            args: [ 'x' ]
+
+# ── KLINGEL EVENT (letzte Aktivitaet) ────────────────────────────────────────
+text_sensor:
+  - id: klingel_aktivitaet_sensor
+    platform: homeassistant
+    entity_id: sensor.hauseingang_letzte_aktivitat
+    on_value:
+      - lvgl.label.update:
+          id: klingel_zeit_label
+          text: !lambda return x.substr(11, 5).c_str();  # nur HH:MM anzeigen
+
+# ── SIRENE STATUS ─────────────────────────────────────────────────────────────
+binary_sensor:
+  - id: sirene_switch_sensor
+    platform: homeassistant
+    entity_id: switch.tuya_sirene_schalter
+    publish_initial_state: true
+    on_state:
+      - if:
+          condition:
+            binary_sensor.is_on: sirene_switch_sensor
+          then:
+            - lvgl.label.update:
+                id: sirene_status_label
+                text: "AN!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: sirene_btn
+                bg_color: 0x881A1A
+          else:
+            - lvgl.label.update:
+                id: sirene_status_label
+                text: "Aus"
+                text_color: 0x888888
+            - lvgl.obj.update:
+                id: sirene_btn
+                bg_color: 0x4A1A1A

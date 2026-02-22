@@ -1,0 +1,158 @@
+# meine-tuerklingel-alarm.yaml
+# Seite: Tuerklingel & Alarm
+
+lvgl:
+  pages:
+    - id: tuerklingel_alarm
+      bg_color: 0x000000
+      pad_all: 0
+      on_load:
+        - lvgl.label.update:
+            id: page_title
+            text: "Tuerklingel & Alarm"
+      widgets:
+        - obj:
+            bg_color: 0x000000
+            border_width: 0
+            pad_all: 0
+            pad_top: 50
+            pad_bottom: 50
+            pad_left: 6
+            pad_right: 6
+            width: 100%
+            height: 100%
+            layout:
+              type: FLEX
+              flex_flow: ROW_WRAP
+              flex_align_main: START
+              flex_align_cross: START
+              flex_align_track: START
+              pad_column: 8
+              pad_row: 8
+            widgets:
+
+              # ── TUER OEFFNEN (Button) ─────────────────────────────
+              - button:
+                  id: tuer_oeffnen_btn
+                  width: 100%
+                  height: 56
+                  bg_color: 0x1A5A1A
+                  radius: 16
+                  border_width: 0
+                  on_short_click:
+                    - homeassistant.action:
+                        action: button.press
+                        data:
+                          entity_id: button.hauseingang_tur_offnen
+                  widgets:
+                    - label:
+                        text: "Tuer oeffnen"
+                        align: LEFT_MID
+                        x: 12
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        text: "Druecken zum Oeffnen"
+                        align: RIGHT_MID
+                        x: -12
+                        text_font: roboto_sm
+                        text_color: 0xAAFFAA
+
+              # ── LETZTE KLINGEL ────────────────────────────────────
+              - obj:
+                  id: klingel_widget
+                  width: 49%
+                  height: 72
+                  bg_color: 0x2A3A4A
+                  radius: 16
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Letzte Klingel"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: klingel_zeit_label
+                        text: "--:--"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+
+              # ── KLINGEL BATTERIE ──────────────────────────────────
+              - obj:
+                  id: klingel_batt_widget
+                  width: 49%
+                  height: 72
+                  bg_color: 0x2A3A4A
+                  radius: 16
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Klingel Batterie"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: klingel_batt_label
+                        text: "--%"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0x44FF44
+
+              # ── SIRENE EIN/AUS ────────────────────────────────────
+              - button:
+                  id: sirene_btn
+                  width: 49%
+                  height: 72
+                  bg_color: 0x4A1A1A
+                  radius: 16
+                  border_width: 0
+                  on_short_click:
+                    - homeassistant.action:
+                        action: switch.toggle
+                        data:
+                          entity_id: switch.tuya_sirene_schalter
+                  widgets:
+                    - label:
+                        text: "Sirene"
+                        align: TOP_LEFT
+                        x: 8
+                        y: 8
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: sirene_status_label
+                        text: "Aus"
+                        align: BOTTOM_LEFT
+                        x: 8
+                        y: -8
+                        text_font: roboto_lg
+                        text_color: 0xFF4444
+
+              # ── SIGNAL KLINGEL ────────────────────────────────────
+              - obj:
+                  id: klingel_signal_widget
+                  width: 49%
+                  height: 72
+                  bg_color: 0x2A3A4A
+                  radius: 16
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Signal Klingel"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: klingel_signal_label
+                        text: "-- dBm"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_md
+                        text_color: 0xFFFFFF
+
+packages:
+  tuerklingel_sensors: !include meine-tuerklingel-alarm-sensors.yaml

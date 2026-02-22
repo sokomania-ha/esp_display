@@ -1,0 +1,150 @@
+# meine-heizung-wetter-sensors.yaml
+# HA-Sensoren für die Heizung & Wetter Seite
+
+sensor:
+  # ── HEIZUNG: Ist-Temperaturen (vom Heizkörper-Sensor) ────────────────────
+
+  - id: heiz_wohnzimmer_ist_sensor
+    platform: homeassistant
+    entity_id: sensor.wohnzimmer_heizung_local_temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_wohnzimmer_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: heiz_wohnzimmer_soll_sensor
+    platform: homeassistant
+    entity_id: climate.wohnzimmer_heizung
+    attribute: temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_wohnzimmer_soll
+          text:
+            format: "→ %.0f°C"
+            args: [ 'x' ]
+
+  - id: heiz_markus_ist_sensor
+    platform: homeassistant
+    entity_id: sensor.buro_markus_heizung_local_temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_markus_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: heiz_markus_soll_sensor
+    platform: homeassistant
+    entity_id: climate.buro_markus_heizung
+    attribute: temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_markus_soll
+          text:
+            format: "→ %.0f°C"
+            args: [ 'x' ]
+
+  - id: heiz_schlafzimmer_ist_sensor
+    platform: homeassistant
+    entity_id: sensor.schlafzimmer_heizung_local_temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_schlafzimmer_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: heiz_schlafzimmer_soll_sensor
+    platform: homeassistant
+    entity_id: climate.schlafzimmer_heizung
+    attribute: temperature
+    on_value:
+      - lvgl.label.update:
+          id: heiz_schlafzimmer_soll
+          text:
+            format: "→ %.0f°C"
+            args: [ 'x' ]
+
+  # ── RAUMTEMPERATUREN (SNF-Sensoren) ──────────────────────────────────────
+
+  - id: temp_wohnzimmer_sensor
+    platform: homeassistant
+    entity_id: sensor.sn_wohnzimmer_temperatur_temperature
+    on_value:
+      - lvgl.label.update:
+          id: temp_wohnzimmer_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: temp_wohnzimmer_feuchte_sensor
+    platform: homeassistant
+    entity_id: sensor.sn_wohnzimmer_temperatur_humidity
+    on_value:
+      - lvgl.label.update:
+          id: temp_wohnzimmer_feuchte
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - id: temp_markus_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_markus_temperature
+    on_value:
+      - lvgl.label.update:
+          id: temp_markus_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: temp_markus_feuchte_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_markus_humidity
+    on_value:
+      - lvgl.label.update:
+          id: temp_markus_feuchte
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - id: temp_schlafzimmer_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_schlafzimmer_temperature
+    on_value:
+      - lvgl.label.update:
+          id: temp_schlafzimmer_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: temp_schlafzimmer_feuchte_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_schlafzimmer_humidity
+    on_value:
+      - lvgl.label.update:
+          id: temp_schlafzimmer_feuchte
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - id: temp_draussen_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_draussen_temperature
+    on_value:
+      - lvgl.label.update:
+          id: temp_draussen_ist
+          text:
+            format: "%.1f°C"
+            args: [ 'x' ]
+
+  - id: temp_draussen_feuchte_sensor
+    platform: homeassistant
+    entity_id: sensor.snf_draussen_humidity
+    on_value:
+      - lvgl.label.update:
+          id: temp_draussen_feuchte
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]

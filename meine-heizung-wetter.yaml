@@ -1,0 +1,236 @@
+# meine-heizung-wetter.yaml
+# Seite: Heizung & Wetter-Sensoren
+# Zeigt Soll/Ist-Temperaturen der Heizkörper und Raumtemperaturen
+
+lvgl:
+  pages:
+    - id: heizung_wetter
+      bg_color: 0x000000
+      pad_all: 0
+      on_load:
+        - lvgl.label.update:
+            id: page_title
+            text: "Heizung & Wetter"
+      widgets:
+        - obj:
+            bg_color: 0x000000
+            border_width: 0
+            pad_all: 0
+            pad_top: 50
+            pad_bottom: 50
+            pad_left: 6
+            pad_right: 6
+            width: 100%
+            height: 100%
+            layout:
+              type: FLEX
+              flex_flow: ROW_WRAP
+              flex_align_main: START
+              flex_align_cross: START
+              flex_align_track: START
+              pad_column: 8
+              pad_row: 8
+            widgets:
+
+              # ── HEIZUNG WOHNZIMMER ──────────────────────────────
+              - obj:
+                  id: heiz_wohnzimmer_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x5A6173
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        id: heiz_wohnzimmer_label
+                        text: "Wohnzimmer"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: heiz_wohnzimmer_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: heiz_wohnzimmer_soll
+                        text: "→ --°C"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0xFFD700
+
+              # ── HEIZUNG BÜRO MARKUS ──────────────────────────────
+              - obj:
+                  id: heiz_markus_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x5A6173
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        id: heiz_markus_label
+                        text: "Büro Markus"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: heiz_markus_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: heiz_markus_soll
+                        text: "→ --°C"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0xFFD700
+
+              # ── HEIZUNG SCHLAFZIMMER ─────────────────────────────
+              - obj:
+                  id: heiz_schlafzimmer_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x5A6173
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        id: heiz_schlafzimmer_label
+                        text: "Schlafzimmer"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: heiz_schlafzimmer_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: heiz_schlafzimmer_soll
+                        text: "→ --°C"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0xFFD700
+
+              # ── DRAUSSEN ─────────────────────────────────────────
+              - obj:
+                  id: temp_draussen_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x3A4A5A
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Draußen"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: temp_draussen_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0x00CFFF
+                    - label:
+                        id: temp_draussen_feuchte
+                        text: "--%"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0x88CCFF
+
+              # ── TEMP WOHNZIMMER (Sensor) ─────────────────────────
+              - obj:
+                  id: temp_wohnzimmer_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x3A4A5A
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Wohnzimmer"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: temp_wohnzimmer_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: temp_wohnzimmer_feuchte
+                        text: "--%"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0x88CCFF
+
+              # ── TEMP BÜRO MARKUS (Sensor) ────────────────────────
+              - obj:
+                  id: temp_markus_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x3A4A5A
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Büro Markus"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: temp_markus_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: temp_markus_feuchte
+                        text: "--%"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0x88CCFF
+
+              # ── TEMP SCHLAFZIMMER (Sensor) ───────────────────────
+              - obj:
+                  id: temp_schlafzimmer_widget
+                  width: 49%
+                  height: 86
+                  bg_color: 0x3A4A5A
+                  radius: 20
+                  border_width: 0
+                  pad_all: 8
+                  widgets:
+                    - label:
+                        text: "Schlafzimmer"
+                        align: TOP_LEFT
+                        text_font: roboto_sm
+                        text_color: 0xAAAAAA
+                    - label:
+                        id: temp_schlafzimmer_ist
+                        text: "--.-°C"
+                        align: BOTTOM_LEFT
+                        text_font: roboto_lg
+                        text_color: 0xFFFFFF
+                    - label:
+                        id: temp_schlafzimmer_feuchte
+                        text: "--%"
+                        align: BOTTOM_RIGHT
+                        text_font: roboto_sm
+                        text_color: 0x88CCFF
+
+# ── SENSOREN ────────────────────────────────────────────────────────────────
+packages:
+  heizung_wetter_sensors: !include meine-heizung-wetter-sensors.yaml

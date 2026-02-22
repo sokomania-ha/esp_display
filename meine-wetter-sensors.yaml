@@ -1,0 +1,274 @@
+# meine-wetter-sensors.yaml
+# HA-Sensoren fuer die Wetter-Seiten (DWD Freudenstadt)
+
+sensor:
+  # ── SEITE 1: AKTUELLE MESSWERTE ──────────────────────────────────────────
+
+  - id: wetter_temp_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_temperatur
+    on_value:
+      - lvgl.label.update:
+          id: wetter_temp_wert
+          text:
+            format: "%.1fC"
+            args: [ 'x' ]
+
+  - id: wetter_wind_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_windgeschwindigkeit
+    on_value:
+      - lvgl.label.update:
+          id: wetter_wind_wert
+          text:
+            format: "%.0f km/h"
+            args: [ 'x' ]
+
+  - id: wetter_boeen_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_windboen
+    on_value:
+      - lvgl.label.update:
+          id: wetter_boeen_wert
+          text:
+            format: "%.0f km/h"
+            args: [ 'x' ]
+
+  - id: wetter_regen_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_niederschlag
+    on_value:
+      - lvgl.label.update:
+          id: wetter_regen_wert
+          text:
+            format: "%.1f mm"
+            args: [ 'x' ]
+
+  - id: wetter_wolken_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_bewolkungsgrad
+    on_value:
+      - lvgl.label.update:
+          id: wetter_wolken_wert
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  # ── SEITE 2: VORHERSAGE ───────────────────────────────────────────────────
+
+  - id: vhs_regen_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_niederschlagswahrscheinlichkeit
+    on_value:
+      - lvgl.label.update:
+          id: vhs_regen_wert
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - id: vhs_nebel_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_nebelwahrscheinlichkeit
+    on_value:
+      - lvgl.label.update:
+          id: vhs_nebel_wert
+          text:
+            format: "%.0f%%"
+            args: [ 'x' ]
+
+  - id: vhs_uv_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_uv_index
+    on_value:
+      - lvgl.label.update:
+          id: vhs_uv_wert
+          text:
+            format: "%.0f"
+            args: [ 'x' ]
+
+  - id: vhs_sonne_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_sonnenscheindauer
+    on_value:
+      - lvgl.label.update:
+          id: vhs_sonne_wert
+          text:
+            format: "%.1f h"
+            args: [ 'x' ]
+
+  - id: vhs_sicht_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_sichtweite
+    on_value:
+      - lvgl.label.update:
+          id: vhs_sicht_wert
+          text:
+            format: "%.0f km"
+            args: [ 'x' ]
+
+  - id: vhs_strahlung_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_sonneneinstrahlung
+    on_value:
+      - lvgl.label.update:
+          id: vhs_strahlung_wert
+          text:
+            format: "%.0f W/m2"
+            args: [ 'x' ]
+
+# ── WETTERZUSTAND (Text-Sensor) ───────────────────────────────────────────
+text_sensor:
+  - id: wetter_zustand_sensor
+    platform: homeassistant
+    entity_id: sensor.freudenstadt_wetterzustand
+    on_value:
+      - lvgl.label.update:
+          id: wetter_zustand_wert
+          text: !lambda return x.c_str();
+
+# ── NINA WARNUNGEN (binary_sensor kombiniert) ─────────────────────────────
+binary_sensor:
+  - id: nina_1
+    platform: homeassistant
+    entity_id: binary_sensor.nina_warning_freudenstadt_stadt_freudenstadt_baden_wurttemberg_1
+    on_state:
+      - if:
+          condition:
+            or:
+              - binary_sensor.is_on: nina_1
+              - binary_sensor.is_on: nina_2
+              - binary_sensor.is_on: nina_3
+              - binary_sensor.is_on: nina_4
+              - binary_sensor.is_on: nina_5
+          then:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "AKTIV!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x660000
+          else:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "Keine"
+                text_color: 0x44FF44
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x3A0000
+
+  - id: nina_2
+    platform: homeassistant
+    entity_id: binary_sensor.nina_warning_freudenstadt_stadt_freudenstadt_baden_wurttemberg_2
+    on_state:
+      - if:
+          condition:
+            or:
+              - binary_sensor.is_on: nina_1
+              - binary_sensor.is_on: nina_2
+              - binary_sensor.is_on: nina_3
+              - binary_sensor.is_on: nina_4
+              - binary_sensor.is_on: nina_5
+          then:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "AKTIV!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x660000
+          else:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "Keine"
+                text_color: 0x44FF44
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x3A0000
+
+  - id: nina_3
+    platform: homeassistant
+    entity_id: binary_sensor.nina_warning_freudenstadt_stadt_freudenstadt_baden_wurttemberg_3
+    on_state:
+      - if:
+          condition:
+            or:
+              - binary_sensor.is_on: nina_1
+              - binary_sensor.is_on: nina_2
+              - binary_sensor.is_on: nina_3
+              - binary_sensor.is_on: nina_4
+              - binary_sensor.is_on: nina_5
+          then:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "AKTIV!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x660000
+          else:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "Keine"
+                text_color: 0x44FF44
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x3A0000
+
+  - id: nina_4
+    platform: homeassistant
+    entity_id: binary_sensor.nina_warning_freudenstadt_stadt_freudenstadt_baden_wurttemberg_4
+    on_state:
+      - if:
+          condition:
+            or:
+              - binary_sensor.is_on: nina_1
+              - binary_sensor.is_on: nina_2
+              - binary_sensor.is_on: nina_3
+              - binary_sensor.is_on: nina_4
+              - binary_sensor.is_on: nina_5
+          then:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "AKTIV!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x660000
+          else:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "Keine"
+                text_color: 0x44FF44
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x3A0000
+
+  - id: nina_5
+    platform: homeassistant
+    entity_id: binary_sensor.nina_warning_freudenstadt_stadt_freudenstadt_baden_wurttemberg_5
+    on_state:
+      - if:
+          condition:
+            or:
+              - binary_sensor.is_on: nina_1
+              - binary_sensor.is_on: nina_2
+              - binary_sensor.is_on: nina_3
+              - binary_sensor.is_on: nina_4
+              - binary_sensor.is_on: nina_5
+          then:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "AKTIV!"
+                text_color: 0xFF4444
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x660000
+          else:
+            - lvgl.label.update:
+                id: nina_wert
+                text: "Keine"
+                text_color: 0x44FF44
+            - lvgl.obj.update:
+                id: nina_widget
+                bg_color: 0x3A0000

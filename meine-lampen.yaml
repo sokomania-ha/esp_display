@@ -1,13 +1,18 @@
 # meine-lampen.yaml
+# Seite 1: Alle Lichter + erste Lampen
+# Seite 2: Restliche Lampen
+
 lvgl:
   pages:
+
+    # ── SEITE 1: LAMPEN ────────────────────────────────────────────────────
     - id: meine_lampen
       bg_color: 0x000000
       pad_all: 0
       on_load:
         - lvgl.label.update:
             id: page_title
-            text: Meine Lampen
+            text: "Lampen 1"
       widgets:
         - obj:
             bg_color: 0x000000
@@ -21,22 +26,34 @@ lvgl:
             height: 100%
             layout:
               type: FLEX
-              flex_flow: COLUMN_WRAP
+              flex_flow: ROW_WRAP
               flex_align_main: START
               flex_align_cross: START
               flex_align_track: START
               pad_column: 8
               pad_row: 8
             widgets:
-              # Alle Lichter (breit über beide Spalten)
+
+              # Alle Lichter (breit)
               - button:
                   <<: !include
                     file: layouts/widgets/buttons/icon_text_buttons/light_group_buttons/widget.yaml
                     vars:
                       uid: alle_lichter_2
                       entity_id: light.alle_lichter_2
-                      text: Alle Lichter
+                      text: "Alle Lichter"
                       width: 100%
+                      height: 86
+
+              # Alle Lichter (Gruppe 1)
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_group_buttons/widget.yaml
+                    vars:
+                      uid: alle_lichter
+                      entity_id: light.alle_lichter
+                      text: "Alle (Gruppe)"
+                      width: 49%
                       height: 86
 
               # Stehlampe Bibi
@@ -46,18 +63,18 @@ lvgl:
                     vars:
                       uid: stehlampe_bibi
                       entity_id: light.stehlampe_bibi
-                      text: Stehlampe Bibi
+                      text: "Stehlampe Bibi"
                       width: 49%
                       height: 86
 
-              # Garderobe Licht
+              # Garderobe
               - button:
                   <<: !include
                     file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
                     vars:
                       uid: garderobe_licht
                       entity_id: light.garderobe_licht
-                      text: Garderobe
+                      text: "Garderobe"
                       width: 49%
                       height: 86
 
@@ -66,21 +83,123 @@ lvgl:
                   <<: !include
                     file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
                     vars:
-                      uid: wohnzimmerschrank
+                      uid: licht_wohnzimmerschrank
                       entity_id: light.licht_wohnzimmerschrank
-                      text: Wohnzimmer
+                      text: "Wohnz.schrank"
                       width: 49%
                       height: 86
 
-# Sensoren für die Lampen
+              # Licht Wohnzimmer
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: licht_wohnzimmer
+                      entity_id: light.licht_wohnzimmer
+                      text: "Wohnzimmer"
+                      width: 49%
+                      height: 86
+
+              # Kuchen Unterlicht
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: kuchen_unterlicht
+                      entity_id: light.kuchen_unterlicht
+                      text: "Kuche unten"
+                      width: 49%
+                      height: 86
+
+    # ── SEITE 2: MEHR LAMPEN ───────────────────────────────────────────────
+    - id: meine_lampen_2
+      bg_color: 0x000000
+      pad_all: 0
+      on_load:
+        - lvgl.label.update:
+            id: page_title
+            text: "Lampen 2"
+      widgets:
+        - obj:
+            bg_color: 0x000000
+            border_width: 0
+            pad_all: 0
+            pad_top: 50
+            pad_bottom: 50
+            pad_left: 6
+            pad_right: 6
+            width: 100%
+            height: 100%
+            layout:
+              type: FLEX
+              flex_flow: ROW_WRAP
+              flex_align_main: START
+              flex_align_cross: START
+              flex_align_track: START
+              pad_column: 8
+              pad_row: 8
+            widgets:
+
+              # Kuche Unterschrank 2
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: licht_kuche_unterschrank2
+                      entity_id: light.licht_kuche_unterschrank2
+                      text: "Kuche unten 2"
+                      width: 49%
+                      height: 86
+
+              # Aktenschrank Markus
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: licht_aktenschrank_markus
+                      entity_id: light.licht_aktenschrank_markus
+                      text: "Aktenschrank"
+                      width: 49%
+                      height: 86
+
+              # Bibis Ecke
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: bibis_ecke_licht
+                      entity_id: light.bibis_ecke_licht
+                      text: "Bibis Ecke"
+                      width: 49%
+                      height: 86
+
+              # 3D-Drucker
+              - button:
+                  <<: !include
+                    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/widget.yaml
+                    vars:
+                      uid: licht_3d_drucker
+                      entity_id: light.licht_3d_drucker
+                      text: "3D-Drucker"
+                      width: 49%
+                      height: 86
+
+# ── SENSOREN ────────────────────────────────────────────────────────────────
 packages:
-  alle_lichter_2_sensors: !include 
+  # Seite 1
+  alle_lichter_2_sensors: !include
     file: layouts/widgets/buttons/icon_text_buttons/light_group_buttons/sensors.yaml
     vars:
       uid: alle_lichter_2
       entity_id: light.alle_lichter_2
 
-  stehlampe_bibi_sensors: !include 
+  alle_lichter_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_group_buttons/sensors.yaml
+    vars:
+      uid: alle_lichter
+      entity_id: light.alle_lichter
+
+  stehlampe_bibi_sensors: !include
     file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
     vars:
       uid: stehlampe_bibi
@@ -92,8 +211,45 @@ packages:
       uid: garderobe_licht
       entity_id: light.garderobe_licht
 
-  wohnzimmerschrank_sensors: !include
+  licht_wohnzimmerschrank_sensors: !include
     file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
     vars:
-      uid: wohnzimmerschrank
+      uid: licht_wohnzimmerschrank
       entity_id: light.licht_wohnzimmerschrank
+
+  licht_wohnzimmer_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: licht_wohnzimmer
+      entity_id: light.licht_wohnzimmer
+
+  kuchen_unterlicht_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: kuchen_unterlicht
+      entity_id: light.kuchen_unterlicht
+
+  # Seite 2
+  licht_kuche_unterschrank2_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: licht_kuche_unterschrank2
+      entity_id: light.licht_kuche_unterschrank2
+
+  licht_aktenschrank_markus_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: licht_aktenschrank_markus
+      entity_id: light.licht_aktenschrank_markus
+
+  bibis_ecke_licht_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: bibis_ecke_licht
+      entity_id: light.bibis_ecke_licht
+
+  licht_3d_drucker_sensors: !include
+    file: layouts/widgets/buttons/icon_text_buttons/light_buttons/sensors.yaml
+    vars:
+      uid: licht_3d_drucker
+      entity_id: light.licht_3d_drucker
